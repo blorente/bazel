@@ -1185,6 +1185,24 @@ def _impl(ctx):
         ],
     )
 
+    linked_framework_flags_feature = feature(
+        name = "linked_framework_flags",
+        flag_sets = [
+            flag_set(
+                actions = all_link_actions +
+                          ["objc-executable", "objc++-executable"],
+                flag_groups = [
+                    flag_group(
+                        flags = [
+                            "-framework",
+                            "CoreServices",
+                        ],
+                    ),
+                ],
+            ),
+        ],
+    )
+
     pic_feature = feature(
         name = "pic",
         enabled = True,
@@ -2848,6 +2866,7 @@ def _impl(ctx):
             default_link_flags_feature,
             no_deduplicate_feature,
             dead_strip_feature,
+            linked_framework_flags_feature,
             cpp_linker_flags_feature,
             apply_implicit_frameworks_feature,
             link_cocoa_feature,
